@@ -1,0 +1,29 @@
+-----
+2014-10-15
+
+We're going to test single word books in this entry: John 1, John chapter 2, John 3:7, John 4:5-10 
+
+-----
+2014-10-16
+
+In this entry, we're going to test two word book titles: 1 Nephi 1, 1 Nephi 2, 1 Nephi 3:7, 1 Nephi 4:1-10 
+
+-----
+2014-10-17
+
+This entry will test a certain form of three word book title: Doctrine & Covenants 1, Doctrine & Covenants chapter 2,  Doctrine & Covenants 3:1, Doctrine & Covenants 4:1-10 
+
+-----
+2014-10-18
+
+This entry will test a certain form of three word book title and the appropriate converter: D & C 58:10 D & C 59:11-10 D & C 60 D & C chapter 61 
+
+-----
+2014-10-19
+
+Now we're going to test a different format of doc n cov's D&C 10 d&c 11 D&C chapter 12 d&c chapter 13 D&C 14:1 d&c 15:1 D&C 16:1-10 d&c 17:1-10 
+
+-----
+2014-10-20
+
+love hope charity savior

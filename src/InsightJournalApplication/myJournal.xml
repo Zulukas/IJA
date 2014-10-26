@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+-<journal>
+    <entry date="1900-01-01">
+		<scripture book="D&amp;C" chapter="107" startverse="1" />
+		<topic>Priesthood</topic>
+  	<content>
+			This is an example entry which contains a reference to
+                        the priesthood and a scripture reference to D&C 107:1
+		</content>
+	</entry>
+</journal>

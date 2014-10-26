@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<journal>
+  <entry date="2014-10-15">
+    <scripture book="John" chapter="4" endverse="10" startverse="5"/>
+    <scripture book="John" chapter="3" endverse="0" startverse="7"/>
+    <scripture book="John" chapter="1" endverse="0" startverse="0"/>
+    <scripture book="John" chapter="2" endverse="0" startverse="0"/>
+    <content>We're going to test single word books in this entry: John 1, John chapter 2, John 3:7, John 4:5-10 </content>
+  </entry>
+  <entry date="2014-10-16">
+    <scripture book="1 Nephi" chapter="4" endverse="10" startverse="1"/>
+    <scripture book="1 Nephi" chapter="3" endverse="0" startverse="7"/>
+    <scripture book="1 Nephi" chapter="1" endverse="0" startverse="0"/>
+    <scripture book="1 Nephi" chapter="2" endverse="0" startverse="0"/>
+    <content>In this entry, we're going to test two word book titles: 1 Nephi 1, 1 Nephi 2, 1 Nephi 3:7, 1 Nephi 4:1-10 </content>
+  </entry>
+  <entry date="2014-10-17">
+    <scripture book="Doctrine &amp; Covenants" chapter="4" endverse="10" startverse="1"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="3" endverse="0" startverse="1"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="1" endverse="0" startverse="0"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="2" endverse="0" startverse="0"/>
+    <content>This entry will test a certain form of three word book title: Doctrine &amp; Covenants 1, Doctrine &amp; Covenants chapter 2,  Doctrine &amp; Covenants 3:1, Doctrine &amp; Covenants 4:1-10 </content>
+  </entry>
+  <entry date="2014-10-18">
+    <scripture book="Doctrine &amp; Covenants" chapter="59" endverse="10" startverse="11"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="58" endverse="0" startverse="10"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="60" endverse="0" startverse="0"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="61" endverse="0" startverse="0"/>
+    <content>This entry will test a certain form of three word book title and the appropriate converter: D &amp; C 58:10 D &amp; C 59:11-10 D &amp; C 60 D &amp; C chapter 61 </content>
+  </entry>
+  <entry date="2014-10-19">
+    <scripture book="Doctrine &amp; Covenants" chapter="16" endverse="10" startverse="1"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="17" endverse="10" startverse="1"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="14" endverse="0" startverse="1"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="15" endverse="0" startverse="1"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="10" endverse="0" startverse="0"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="11" endverse="0" startverse="0"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="12" endverse="0" startverse="0"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="13" endverse="0" startverse="0"/>
+    <content>Now we're going to test a different format of doc n cov's D&amp;C 10 d&amp;c 11 D&amp;C chapter 12 d&amp;c chapter 13 D&amp;C 14:1 d&amp;c 15:1 D&amp;C 16:1-10 d&amp;c 17:1-10 </content>
+  </entry>
+  <entry date="2014-10-20">
+    <topic>Love</topic>
+    <topic>Hope</topic>
+    <topic>Love</topic>
+    <topic>Savior</topic>
+    <content>love hope charity savior</content>
+  </entry>
+</journal>
