@@ -41,8 +41,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Kevin Andres
+ *The GUI class acts as the main class and handles everything
  */
 public class GUI extends Application {
 
@@ -446,7 +445,6 @@ public class GUI extends Application {
             //String file = file;
             currentStage.setTitle(file + " - Insight Journal Application");            
             myJournal.loadFile(file);
-            myJournal.display();
             
             buildEntriesList();
             buildTopicsList();
