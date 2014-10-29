@@ -77,7 +77,6 @@ public class GUI extends Application {
      **************************************************************************/
     @Override
     public void start(final Stage stage) {
-        //loadFile("C:\\Users\\kevin\\Documents\\NetBeansProjects\\InsightJournalApplication\\src\\InsightJournalApplication\\myJournal.xml");
         stage.setTitle("Insight Journal Application");        
         stage.getIcons().add(new Image("file:src\\InsightJournalApplication\\icon.png"));
         
@@ -105,8 +104,9 @@ public class GUI extends Application {
         defaultFile = PropertiesHandler.defaultFile;
         System.out.println("Default file set to: " + defaultFile);
         loadFile(defaultFile);
-        System.out.println("Loaded file set to: " + loadedFile);
         loadedFile = defaultFile;
+        
+        System.out.println("Loaded file set to: " + loadedFile);
     }
 
     /***************************************************************************
@@ -344,6 +344,8 @@ public class GUI extends Application {
             }
         });
 
+        FXCollections.sort(entriesItems);
+        
         entries.setItems(entriesItems);
         entries.setPrefWidth(165);
         entries.setPrefHeight(243);
@@ -375,7 +377,7 @@ public class GUI extends Application {
                 topicsItems.add(topic);
             }
 
-            System.out.println(topicsList);
+            FXCollections.sort(topicsItems);
 
             topics.setItems(topicsItems);
             topics.setPrefWidth(165);
@@ -392,7 +394,7 @@ public class GUI extends Application {
      * selected journal entry
      **************************************************************************/
     private void buildScripturesList() {
-        if (selectedDate != null) {
+        if (selectedDate == null) {
             scriptures = new ListView();
             ObservableList<String> scripturesItems = FXCollections.observableArrayList();
 
@@ -401,7 +403,7 @@ public class GUI extends Application {
             grid.add(scriptures, 1, 6, 1, 4);
         } else {
             List<Scripture> scripturesList = currentEntry.getScriptureList();
-
+            
             scriptures = new ListView();
             ObservableList<String> scripturesItems = FXCollections.observableArrayList();
 
@@ -410,7 +412,7 @@ public class GUI extends Application {
                 scripturesItems.add(temp);
             }
 
-            Collections.sort(scripturesItems);
+            FXCollections.sort(scripturesItems);
 
             scriptures.setItems(scripturesItems);
             scriptures.setPrefWidth(165);
@@ -445,6 +447,11 @@ public class GUI extends Application {
             currentStage.setTitle(file + " - Insight Journal Application");            
             myJournal.loadFile(file);
             myJournal.display();
+            
+            buildEntriesList();
+            buildTopicsList();
+            buildScripturesList();
+            
         } catch (NullPointerException e) {
             System.err.println("Unable to open \"" + file + "\"");
             e.printStackTrace();
