@@ -70,6 +70,10 @@ public class Journal {
         }
     }
 
+    /***************************************************************************
+     * This constructor allows you to create a journal object by passing in a 
+     * filename 
+     **************************************************************************/
     public Journal(String filename) {       
         try {            
             PropertiesHandler prop = new PropertiesHandler();
@@ -84,20 +88,18 @@ public class Journal {
             Logger.getLogger(Journal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     
-    public void display() {
-        Display disp = new Display(getEntries());
-        disp.displayBookReferences();
-        System.out.println("--------------------------------------");
-        disp.displayTopicReferences();
-    }
-    
+    /***************************************************************************
+     * Load the file being passed in through the parameters
+     **************************************************************************/
     public void loadFile(String fileName) {
-        IOFileIn readIn = new IOFileIn(fileName, termsToFind);
+        Importer readIn = new Importer(fileName, termsToFind);
         setEntries(readIn.readFile());
     }
     
+    /***************************************************************************
+     * Save the file from the parameter input.
+     **************************************************************************/
     public void saveFiles(String input) {
         try {
             String[] split = input.split("\\.");
@@ -186,6 +188,10 @@ public class Journal {
         }
     }
     
+    /***************************************************************************
+     * Write the XML document to the filename being passed in through the 
+     * parameter.
+     **************************************************************************/
     private void writeXMLDocument(String filename) throws Exception{
         System.out.println("Building document");
         

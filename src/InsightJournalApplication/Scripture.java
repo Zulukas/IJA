@@ -29,6 +29,9 @@ class Scripture{
    public void setStartVerse(int newStartVerse){startVerse = newStartVerse;}
    public void setEndVerse(int newEndVerse){endVerse = newEndVerse;}
    
+   /***************************************************************************
+     * Build a scripture from book, chapter, verse-verse
+     **************************************************************************/
    public Scripture(String book, int chapter, int startVerse, int endVerse) {
        this.book = book;
        this.chapter = chapter;
@@ -36,12 +39,18 @@ class Scripture{
        this.endVerse = endVerse;
    }
    
+   /***************************************************************************
+     * Build a scripture from book, chapter, verse
+     **************************************************************************/
    public Scripture(String book, int chapter, int startVerse) {
        this.book = book;
        this.chapter = chapter;
        this.startVerse = startVerse;
    }
    
+   /***************************************************************************
+     * Build a scripture from book and chapter
+     **************************************************************************/
    public Scripture(String book, int chapter) {
        this.book = book;
        this.chapter = chapter;

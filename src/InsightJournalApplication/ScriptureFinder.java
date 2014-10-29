@@ -22,6 +22,9 @@ public final class ScriptureFinder {
     private ArrayList<Scripture> scriptures;
     private static List<String> books;
 
+    /***************************************************************************
+     * Display the results from the scripture finder to the console.
+     **************************************************************************/
     public void display() {
         for (Scripture reference : scriptures) {
             reference.display();
@@ -29,7 +32,10 @@ public final class ScriptureFinder {
         }
     }
 
-    private ScriptureFinder() {
+    /***************************************************************************
+     * Default constructor which sets the books list equal to what Journal has
+     **************************************************************************/
+    public ScriptureFinder() {
         if (books == null) {
             books = Journal.booksToFind;
         }
@@ -38,6 +44,9 @@ public final class ScriptureFinder {
         scriptures = null;
     }
 
+    /***************************************************************************
+     * constructor which allows the user to pass
+     **************************************************************************/
     public ScriptureFinder(List<String> books) {
         if (books == null) {
             books = Journal.booksToFind;
@@ -103,6 +112,9 @@ public final class ScriptureFinder {
         }
     }
 
+    /***************************************************************************
+     * Remove the word 'chapter' from the text
+     **************************************************************************/
     private void extractChapterWord() {
         boolean b = true;
 
@@ -470,6 +482,9 @@ public final class ScriptureFinder {
         }
     }
 
+    /***************************************************************************
+     * Check to see if a particular bookname is abbreviated
+     **************************************************************************/
     private String checkForAbbreviation(String bookToCompare) { 
         System.out.println("CHECKING: " + bookToCompare);
         

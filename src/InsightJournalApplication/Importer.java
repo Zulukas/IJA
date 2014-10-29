@@ -19,7 +19,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- *
+ * Handles reading in files from either text or xml.
  * @author Bryce
  */
 public class Importer {

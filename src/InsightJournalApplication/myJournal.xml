@@ -1,12 +1,87 @@
-<?xml version="1.0"?>
-
--<journal>
-    <entry date="1900-01-01">
-		<scripture book="D&amp;C" chapter="107" startverse="1" />
-		<topic>Priesthood</topic>
-  	<content>
-			This is an example entry which contains a reference to
-                        the priesthood and a scripture reference to D&C 107:1
-		</content>
-	</entry>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<journal>
+  <entry date="2014-10-25">
+    <scripture book="Doctrine &amp; Covenants" chapter="4" endverse="0" startverse="0"/>
+    <scripture book="2 Nephi" chapter="26" endverse="0" startverse="30"/>
+    <scripture book="1 Corinthians" chapter="13" endverse="0" startverse="13"/>
+    <scripture book="Matthew" chapter="22" endverse="39" startverse="37"/>
+    <scripture book="Moroni" chapter="7" endverse="0" startverse="45"/>
+    <scripture book="Moroni" chapter="7" endverse="0" startverse="47"/>
+    <scripture book="Moroni" chapter="7" endverse="0" startverse="48"/>
+    <topic>Commandments</topic>
+    <topic>Covenants</topic>
+    <topic>Faith</topic>
+    <topic>Hope</topic>
+    <topic>Love</topic>
+    <topic>Savior</topic>
+    <topic>Seek</topic>
+    <content>This journal entry is going to cover talk about charity.  In Moroni 7:45, charity is defined as being the qualities in an individual that make him or he charitable.  These qualities include not being envious of others, seeking not to build up ourselves at the expense of others, and not thinking evil.  Moroni 7:47 describes it as being the pure love of Christ.
+We are exorted by Moroni in Moroni 7:48 to pray to the Father with all our hearts in order to gain charity.  In 2 Nephi 26:30, we are told that we are nothing unless we have charity in our lives.  1 Corinthians 13:13 states that faith, hope, and charity are great, but of these three, charity is the greatest.  
+We know from the "Missionary chapter" of Doctrine &amp; Covenants 4 that, "faith, hope, charity and love, with an eye single to the glory of God qualify us for the work".  Why is it that charity has so much emphasis?
+In Matthew 22:37-39, Christ tells us that the greatest commandment is to love God with all our hearts.  The next greatest commandment is to love our neighbors, or those around us, as we love ourselves.</content>
+  </entry>
+  <entry date="2014-09-18">
+    <scripture book="Abraham" chapter="1" endverse="0" startverse="2"/>
+    <scripture book="1 Nephi" chapter="10" endverse="0" startverse="19"/>
+    <scripture book="Matthew" chapter="7" endverse="0" startverse="7"/>
+    <scripture book="Abraham" chapter="1" endverse="0" startverse="0"/>
+    <scripture book="Acts" chapter="8" endverse="0" startverse="0"/>
+    <topic>Faith</topic>
+    <topic>Happiness</topic>
+    <topic>Holy Ghost</topic>
+    <topic>Priesthood</topic>
+    <topic>Seek</topic>
+    <content>Continuing my study of the Priesthood, today I was reading from Abraham chapter 1.
+The single verse of Abr 1:2 is just packed with information:
+* "Finding there was greater happiness and peace and rest for me" - Abraham saw what his father and others had in their lives, and he saw the blessings of the Gospel, and recognized how much more happiness he would have with the Gospel.
+* "I sought for the blessings of the fathers" - After he recognized the increased joy, he truly sought for it. Without diligently seeking, he would not have obtained these blessings, but because he did, he found them. (see Matt 7:7 - "seek and ye shall find", but also, 1 Nephi 10:19 - "For he that diligently seeketh shall find; and the mysteries of God shall be unfolded unto them, by the power of the Holy Ghost")
+* "and the right whereunto I should be ordained to administer the same" - He didn't just seek for the blessings for himself, but he wanted to be able to give these blessings to others. Contrast this with Simon's desire for the priesthood in Acts chapter 8, Abraham's is a pure motive.
+* "having been myself a follower of righteousness" - He had been faithful to this point
+* "desiring also to be one who possessed great knowledge" - He wanted to know the mysteries of God. Sometimes in the church, we have a negative feeling associated with this, like "you shouldn't worry about this". Abraham truly wanted to know these mysteries, and this is a good thing!
+* "and to be a greater follower of righteousness" - He wanted to be better. I think this is so critical in connection with the last point. He didn't just want to have greater knowledge for the sake of "knowing", he wanted to know this for the sake of changing his life and being a better disciple. I think this is so important, and where many of us fall down.
+* "and to possess a greater knowledge" - Hmm similar to #5, but this time it says a greater knowledge. I'm not sure if this really means anything specifically, or if it is just reiterating the point.
+Pattern:
+* Recognize the blessings of the Gospel
+* Desire and seek for these blessings (for self)
+* Seek to bless others
+* Be faithful to current knowledge
+* Desire to know the mysteries of God
+* Desire to be a better disciple of God</content>
+  </entry>
+  <entry date="2014-09-17">
+    <scripture book="Isaiah" chapter="14" endverse="14" startverse="12"/>
+    <scripture book="Acts" chapter="8" endverse="0" startverse="16"/>
+    <scripture book="Acts" chapter="8" endverse="0" startverse="15"/>
+    <scripture book="Acts" chapter="8" endverse="0" startverse="9"/>
+    <scripture book="Acts" chapter="8" endverse="0" startverse="19"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="29" endverse="0" startverse="36"/>
+    <scripture book="Moses" chapter="4" endverse="0" startverse="1"/>
+    <scripture book="Psalms" chapter="106" endverse="0" startverse="33"/>
+    <scripture book="Numbers" chapter="20" endverse="0" startverse="10"/>
+    <scripture book="Deuteronomy" chapter="4" endverse="0" startverse="21"/>
+    <scripture book="Acts" chapter="8" endverse="0" startverse="21"/>
+    <scripture book="Acts" chapter="8" endverse="0" startverse="0"/>
+    <scripture book="Doctrine &amp; Covenants" chapter="121" endverse="0" startverse="0"/>
+    <topic>Baptism</topic>
+    <topic>Destruction</topic>
+    <topic>Holy Ghost</topic>
+    <topic>Humility</topic>
+    <topic>Pride</topic>
+    <topic>Priesthood</topic>
+    <topic>Repentance</topic>
+    <topic>Savior</topic>
+    <topic>Seek</topic>
+    <content>In continuing to study about the priesthood, today I studied Acts chapter 8, where the account is given about Simon, the sorcerer, who wanted to buy the Priesthood. And a few things stood out.
+First, it is clear from Acts 8:16, that there is a difference between the preaching and priesthood of Philip, where only baptism was performed, and that of the Apostles, where the Holy Ghost was bestowed.
+Second, it is interesting in Acts 8:15 that the Apostles prayed for the people to receive the Holy Ghost, before they laid their hands on them. Seeking and receiving the Holy Ghost is more involved than simply performing the ordinance. The people need to be humble, repentant, and truly seek this blessing, and I think that is what Peter and John were praying for.
+But another, perhaps greater lesson about the priesthood is also seen in this chapter. In Acts 8:9, it talks about the "miracles" that Simon did by sorcery, "giving out that himself was some great one". Then in Acts 8:19, Simon says "give _me_ also this power, that on whomsover _I_ lay hands, he may receive the Holy Ghost".
+Maybe it wasn't said this way, but the personal pronouns "me" and "I" stand out to me here. They seem an echo of Lucifer's statement, "Give me thine honor" (see Isaiah 14:12-14, and D&amp;C 29:36, Moses 4:1), and also even of the time that Moses spake unadvisedly, saying "he" had made water come out of the rock (see Psalms 106:33, Numbers 20:10, and Deut 4:21). In my opinion, Simon is seeking for the priesthood, and the power of God for his own pride, and to be something great of himself (see D&amp;C 121). In response, Peter says that his money will perish with him, "for they heart is not right in the sight of God." (Acts 8:21).
+It also makes me think of the line from Indiana Jones and the Last Crusade, "Why do you seek the cup of Christ? Is it for His glory, or for yours?" -- truly, as we seek blessings of the gospel and the power of God in our lives, we should be seeking it for God's glory, and to bless the lives of others, NOT so that we can be a big deal.
+Principle: Priesthood requires humility.</content>
+  </entry>
+  <entry date="2014-10-28">
+    <scripture book="Helaman" chapter="5" endverse="0" startverse="12"/>
+    <topic>Seek</topic>
+    <content>We will discuss Helaman 5:12 in this entry where it talks about staying firm in the gospel.  "When the devil shall send forth his shafts in the whirlwinds" gives a vivid imagery of the torrential trials the devil will send at us.  It is up to us to withstand these temptations by staying true to the gospel by reading our scriptures, saying our prayers, and regularly attending church.  The typical Sunday school answers!</content>
+  </entry>
 </journal>
