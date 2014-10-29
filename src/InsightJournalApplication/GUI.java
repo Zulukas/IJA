@@ -68,8 +68,8 @@ public class GUI extends Application {
     private final String todayAsString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private String selectedDate = "NO DATE";
     private String comboSelection = "NO SELECTION";
-    private String defaultFile;
-    private String loadedFile;
+    private String defaultFile = "NO FILE";
+    private String loadedFile = "NO FILE";
 
     /***************************************************************************
      * start handles everything from setting up the stage to building the 
@@ -309,13 +309,6 @@ public class GUI extends Application {
     }
 
     /***************************************************************************
-     * main simply calls launch which gets the program going
-     **************************************************************************/
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    /***************************************************************************
      * Build the ListView object containing the entries within the journal.
      **************************************************************************/
     public void buildEntriesList() {
@@ -339,8 +332,13 @@ public class GUI extends Application {
             @Override
             public void handle(MouseEvent arg0) {
                 selectedDate = entries.getSelectionModel().getSelectedItem();
-                currentEntry = myEntries.get(selectedDate);
-                entryText.setText(currentEntry.getContent());
+                
+                if (selectedDate != null) {
+                    currentEntry = myEntries.get(selectedDate);
+                    entryText.setText(currentEntry.getContent());
+                }
+                
+                
                 buildTopicsList();
                 buildScripturesList();
             }
@@ -360,7 +358,7 @@ public class GUI extends Application {
      * journal entry
      **************************************************************************/
     private void buildTopicsList() {
-        if (selectedDate.equals("NO DATE")) {
+        if (selectedDate == null) {
             topics = new ListView();
             ObservableList<String> topicsItems = FXCollections.observableArrayList();
             topics.setPrefWidth(165);
@@ -394,7 +392,7 @@ public class GUI extends Application {
      * selected journal entry
      **************************************************************************/
     private void buildScripturesList() {
-        if (selectedDate.equals("NO DATE")) {
+        if (selectedDate != null) {
             scriptures = new ListView();
             ObservableList<String> scripturesItems = FXCollections.observableArrayList();
 
@@ -403,7 +401,6 @@ public class GUI extends Application {
             grid.add(scriptures, 1, 6, 1, 4);
         } else {
             List<Scripture> scripturesList = currentEntry.getScriptureList();
-            //List<String> stringScripturesList = new ArrayList<>();
 
             scriptures = new ListView();
             ObservableList<String> scripturesItems = FXCollections.observableArrayList();
@@ -445,7 +442,7 @@ public class GUI extends Application {
     public void loadFile(String file) {
         try {
             //String file = file;
-            currentStage.setTitle(file + " - Insight Journal Application");
+            currentStage.setTitle(file + " - Insight Journal Application");            
             myJournal.loadFile(file);
             myJournal.display();
         } catch (NullPointerException e) {
@@ -658,4 +655,12 @@ public class GUI extends Application {
 
         return menuBar;
     }
+
+        /***************************************************************************
+     * main simply calls launch which gets the program going
+     **************************************************************************/
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
+
