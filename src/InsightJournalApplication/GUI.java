@@ -1,6 +1,8 @@
 package InsightJournalApplication;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,12 +55,14 @@ public class GUI extends Application {
     
     private Scene mainScene;
     private Scene searchScene;
+    private Scene topicScene;
     
     private Journal myJournal = new Journal();
     private Entry currentEntry = new Entry();
     
     private GridPane grid;
     private GridPane searchGrid;
+    private GridPane topicGrid;
     private ListView<String> entries = new ListView<>();
     private ListView<String> scriptures = new ListView<>();
     private ListView<String> topics = new ListView<>();
@@ -73,6 +77,9 @@ public class GUI extends Application {
     /***************************************************************************
      * start handles everything from setting up the stage to building the
      * individuals scenes.
+     * 
+     * @param stage Pass in the stage in which this function will build scenes
+     * @
      **************************************************************************/
     @Override
     public void start(final Stage stage) {
@@ -82,19 +89,25 @@ public class GUI extends Application {
         
         final Group rootGroup = new Group();
         final Group searchGroup = new Group();
+        final Group topicGroup = new Group();
         mainScene = new Scene(rootGroup, 620, 600, Color.WHITE);
         searchScene = new Scene(searchGroup, 620, 600, Color.WHITE);
+        topicScene = new Scene(topicGroup, 620, 600, Color.WHITE);
         final MenuBar menuBar = buildMenuBarWithMenus(stage.widthProperty());
         final MenuBar menuBarSearch = buildMenuBarWithMenus(stage.widthProperty());
+        final MenuBar menuBarTopic = buildMenuBarWithMenus(stage.widthProperty());
         
         buildGrid();
         buildSearchGrid();
-        
+        buildTopicGrid();
+                
+        topicGroup.getChildren().add(topicGrid);
         rootGroup.getChildren().add(grid);
         searchGroup.getChildren().add(searchGrid);
         
         searchGroup.getChildren().add(menuBarSearch);
-        rootGroup.getChildren().add(menuBar);
+        rootGroup.getChildren().add(menuBar);                
+        topicGroup.getChildren().add(menuBarTopic);
         
         //grid.setGridLinesVisible(true);
         currentStage = stage;
@@ -106,6 +119,196 @@ public class GUI extends Application {
         loadedFile = defaultFile;
         
         System.out.println("Loaded file set to: " + loadedFile);
+    }
+    
+    /***************************************************************************
+     * Build the topic grid which will be used to allow the user to edit the
+     * terms file
+     **************************************************************************/
+    public void buildTopicGrid() {
+        topicGrid = new GridPane();
+        topicGrid.setAlignment(Pos.TOP_CENTER);
+        topicGrid.setHgap(10);
+        topicGrid.setVgap(10);
+        topicGrid.setPadding(new Insets(25, 25, 25, 25));
+        
+        final String selectedMaster = "";
+        final String selectedSlave = "";
+        
+        final ListView <String> masterList = new ListView<>();
+        final ListView <String> slaveList = new ListView<>();
+        
+        Button add = new Button("Add");
+        Button remove = new Button("Remove");
+        Button saveButton = new Button("Save Topics");
+        Button back = new Button("Back");
+        
+        Label l = new Label("Tips:\n*Use the text field to add a topic\n" +
+                "*Use the drop down menu (or click on a respective list) to add a scripture\n" +
+                "*Select a topic on either side and press \"Remove\" to remove that topic\n" +
+                "*Press save to save these topics permanently\n" +
+                "*Press back to return to the main screen");
+        
+        final TextField tf = new TextField();
+        
+        final ObservableList<String> master = FXCollections.observableArrayList();        
+        
+        master.addAll(Journal.termsToFind.keySet());
+        FXCollections.sort(master);
+        
+        ObservableList<String> options
+                = FXCollections.observableArrayList("Main Topic", "Sub Topic");
+        final ComboBox comboBox = new ComboBox(options);
+        comboBox.getSelectionModel().select(0);
+        
+        masterList.setItems(master);
+        
+        masterList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            
+            @Override
+            public void handle(MouseEvent arg0) {
+                ObservableList<String> slave = FXCollections.observableArrayList();
+                String selectedMaster = masterList.getSelectionModel().getSelectedItem();
+                
+                if (selectedMaster != null) {
+                    slave.addAll(Journal.termsToFind.get(selectedMaster));
+                    FXCollections.sort(slave);
+                }
+                
+                comboBox.getSelectionModel().select(0);
+                
+                slaveList.setItems(slave);
+                tf.setText(selectedMaster);
+            }
+        });
+        
+        slaveList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            
+            @Override
+            public void handle(MouseEvent arg0) {
+                String selectedSlave = slaveList.getSelectionModel().getSelectedItem();
+                comboBox.getSelectionModel().select(1);
+                
+                tf.setText(selectedSlave);
+            }
+        });
+        
+        add.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent arg0) {
+                String sm = masterList.getSelectionModel().getSelectedItem();
+                String selection = (String) comboBox.getSelectionModel().getSelectedItem();
+                
+                final ObservableList<String> slave = FXCollections.observableArrayList();
+                
+                if (selection.equals("Main Topic")) {
+                    if (!Journal.termsToFind.containsKey(tf.getText())) {
+                        List<String> slaves = new ArrayList<>();
+                        slaves.add(tf.getText().toLowerCase());
+                        Journal.termsToFind.put(tf.getText(), slaves);
+                        
+                        master.remove(0, master.size());
+                        master.addAll(Journal.termsToFind.keySet());
+                        FXCollections.sort(master);
+                        masterList.setItems(master);
+                    }
+                } else {
+                    List<String> values = Journal.termsToFind.get(sm);
+                    
+                    if (!values.contains(tf.getText())) {
+                        values.add(tf.getText());
+                        slave.remove(0, slave.size());
+                        slave.addAll(values);
+                        FXCollections.sort(slave);
+                        slaveList.setItems(slave);
+                    }
+                }
+            }
+        });
+        
+        remove.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent arg0) {
+                final ObservableList<String> slave = FXCollections.observableArrayList();
+                String sm = masterList.getSelectionModel().getSelectedItem();   //Needed a non-final selected master (hence: sm)             
+                String selection = (String) comboBox.getSelectionModel().getSelectedItem();
+
+                if (selection.equals("Main Topic")) {
+                    if (Journal.termsToFind.containsKey(tf.getText())) {
+                        Journal.termsToFind.remove(tf.getText());
+                        master.remove(0, master.size());
+                        slave.remove(0, slave.size());
+                        master.addAll(Journal.termsToFind.keySet());
+                        FXCollections.sort(master);
+                        masterList.setItems(master);
+                        slaveList.setItems(slave);
+                    }
+                } else {
+                    List<String> values = Journal.termsToFind.get(sm);
+
+                    if (values.contains(tf.getText())) {
+                        values.remove(tf.getText());
+                        slave.remove(0, slave.size());
+                        slave.addAll(Journal.termsToFind.get(sm));                        
+                        FXCollections.sort(slave);
+                        slaveList.setItems(slave);
+                    }
+                }
+            }            
+        });
+        
+        back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                currentStage.setScene(mainScene);
+            }
+        });
+        
+        saveButton.setOnAction(new EventHandler<ActionEvent>() {
+           @Override
+           public void handle(ActionEvent e) {
+               try {
+                   BufferedWriter bw = new BufferedWriter(new FileWriter(PropertiesHandler.terms));
+                   
+                   for (Map.Entry<String, List<String>> term : Journal.termsToFind.entrySet()) {
+                       bw.write(term.getKey() + ":");
+                       List<String> values = term.getValue();
+                       
+                       Collections.sort(values);
+                       
+                       int counter = 0;
+                       
+                       for (String value : values) {
+                           if (counter == values.size() - 1) {
+                               bw.write(value);
+                           } else {
+                               bw.write(value + ",");
+                               counter++;
+                           }
+                       }
+                       
+                       bw.write("\n");
+                   }
+                   
+                   bw.close();
+               } catch (Exception ex) {
+                   System.err.println("UNABLE TO SAVE TO TERMS.TXT!");
+               }
+           }
+        });
+        
+        topicGrid.add(masterList, 1, 1, 2, 3);
+        topicGrid.add(slaveList, 3, 1, 2, 3);
+        topicGrid.add(tf, 1, 4);
+        topicGrid.add(add, 2, 4);
+        topicGrid.add(remove, 2, 5);
+        topicGrid.add(saveButton, 1, 7);
+        topicGrid.add(back, 1, 8);
+        topicGrid.add(comboBox, 1, 5);
+        topicGrid.add(l, 4, 4, 4, 4);
+        
     }
     
     /***************************************************************************
@@ -149,6 +352,8 @@ public class GUI extends Application {
                 comboBox.getSelectionModel().clearSelection();
             }
         });
+        
+        
         
         searchButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -217,7 +422,7 @@ public class GUI extends Application {
      * build the scene containing the gui objects for interacting with the
      * journal
      **************************************************************************/
-    public GridPane buildGrid() {
+    public void buildGrid() {
         grid = new GridPane();
         grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(10);
@@ -303,8 +508,6 @@ public class GUI extends Application {
         buildTopicsList();
         buildScripturesList();
         buildEntriesList();
-        
-        return grid;
     }
     
     /***************************************************************************
@@ -360,18 +563,16 @@ public class GUI extends Application {
      **************************************************************************/
     private void buildTopicsList() {
         if (selectedDate == null) {
-            topics = new ListView();
-            ObservableList<String> topicsItems = FXCollections.observableArrayList();
+            topics = new ListView();            
             topics.setPrefWidth(165);
             topics.setPrefHeight(243);
             grid.add(topics, 6, 6, 1, 4);
         } else {
             List<String> topicsList = currentEntry.getTopicList();
             Collections.sort(topicsList);
-            
-            //topics = new ListView();
+                        
             ObservableList<String> topicsItems = FXCollections.observableArrayList();
-            
+
             for (String topic : topicsList) {
                 topicsItems.add(topic);
             }
@@ -395,9 +596,6 @@ public class GUI extends Application {
     private void buildScripturesList() {
         if (selectedDate == null) {
             scriptures = new ListView();
-            ObservableList<String> scripturesItems = FXCollections.observableArrayList();
-            
-            scriptures.setPrefWidth(165);
             scriptures.setPrefHeight(243);
             grid.add(scriptures, 1, 6, 1, 4);
         } else {
@@ -439,6 +637,8 @@ public class GUI extends Application {
     /***************************************************************************
      * A simple function which changes the application title, loads the file,
      * and displays the results in the console for debugging purposes.
+     * 
+     * @param file The file to be loaded
      **************************************************************************/
     public void loadFile(String file) {
         try {
@@ -462,6 +662,10 @@ public class GUI extends Application {
     
     /***************************************************************************
      * Load a file dialogue to open a file or save to a file.
+     * 
+     * @param stage The stage which will hold this window
+     * @param type "open" or "save"
+     * @return String returns the file selected in the file dialogue.
      **************************************************************************/
     public String getFile(Stage stage, String type) {
         FileChooser fileChooser = new FileChooser();
@@ -503,6 +707,8 @@ public class GUI extends Application {
     
     /***************************************************************************
      * Build the menu bar which is at the top of the application.
+     * 
+     * @param menuWidthProperty the width of the menu
      **************************************************************************/
     private MenuBar buildMenuBarWithMenus(final ReadOnlyDoubleProperty menuWidthProperty) {
         final MenuBar menuBar = new MenuBar();
@@ -604,60 +810,20 @@ public class GUI extends Application {
         menuBar.getMenus().add(fileMenu);
         
         // Prepare 'Search' drop-down menu
-        final Menu searchMenu = new Menu("Search");
-        final MenuItem searchDateMenuItem = MenuItemBuilder.create().text("Search by Date").onAction(
+        final Menu editMenu = new Menu("Edit");
+        final MenuItem modifyTopicsMenuItem = MenuItemBuilder.create().text("Add/Remove Topics").onAction(
                 new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        currentStage.setScene(searchScene);
+                        currentStage.setScene(topicScene);
                     }
                 }
         ).accelerator(new KeyCodeCombination(
                 KeyCode.D, KeyCombination.ALT_DOWN))
                 .build();
         
-        final MenuItem searchScriptureMenuItem = MenuItemBuilder.create().text("Search by Scripture").onAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        currentStage.setScene(searchScene);   
-                    }
-                }
-        ).accelerator(new KeyCodeCombination(
-                KeyCode.S, KeyCombination.ALT_DOWN))
-                .build();
-        
-        final MenuItem searchTopicMenuItem = MenuItemBuilder.create().text("Search by Topic").onAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        currentStage.setScene(searchScene);
-                    }
-                }
-        ).accelerator(new KeyCodeCombination(
-                KeyCode.T, KeyCombination.ALT_DOWN))
-                .build();
-        
-        searchMenu.getItems().add(searchDateMenuItem);
-        searchMenu.getItems().add(searchScriptureMenuItem);
-        searchMenu.getItems().add(searchTopicMenuItem);
-        menuBar.getMenus().add(searchMenu);
-        
-        // Prepare 'Help' drop-down menu
-        final Menu helpMenu = new Menu("Help");
-        final MenuItem aboutMenuItem = MenuItemBuilder.create().text("About").onAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        System.out.println("You clicked on About!");
-                    }
-                })
-                .accelerator(
-                        new KeyCodeCombination(
-                                KeyCode.A, KeyCombination.CONTROL_DOWN))
-                .build();
-        helpMenu.getItems().add(aboutMenuItem);
-        menuBar.getMenus().add(helpMenu);
+        editMenu.getItems().add(modifyTopicsMenuItem);
+        menuBar.getMenus().add(editMenu);
         
         // bind width of menu bar to width of associated stage
         menuBar.prefWidthProperty().bind(menuWidthProperty);
