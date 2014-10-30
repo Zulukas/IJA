@@ -44,39 +44,39 @@ import javafx.stage.Stage;
  *The GUI class acts as the main class and handles everything
  */
 public class GUI extends Application {
-
+    
     /*****************************************************
-     * Private member variables kept at the 'class' level 
+     * Private member variables kept at the 'class' level
      * to make for easier accessing
      ****************************************************/
     private Stage currentStage;
-
+    
     private Scene mainScene;
     private Scene searchScene;
-
+    
     private Journal myJournal = new Journal();
     private Entry currentEntry = new Entry();
-
+    
     private GridPane grid;
     private GridPane searchGrid;
     private ListView<String> entries = new ListView<>();
     private ListView<String> scriptures = new ListView<>();
     private ListView<String> topics = new ListView<>();
     private TextArea entryText;
-
+    
     private final String todayAsString = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     private String selectedDate = "NO DATE";
     private String comboSelection = "NO SELECTION";
     private String defaultFile = "NO FILE";
     private String loadedFile = "NO FILE";
-
+    
     /***************************************************************************
-     * start handles everything from setting up the stage to building the 
+     * start handles everything from setting up the stage to building the
      * individuals scenes.
      **************************************************************************/
     @Override
     public void start(final Stage stage) {
-        stage.setTitle("Insight Journal Application");        
+        stage.setTitle("Insight Journal Application");
         stage.getIcons().add(new Image("file:src\\InsightJournalApplication\\icon.png"));
         
         
@@ -86,16 +86,16 @@ public class GUI extends Application {
         searchScene = new Scene(searchGroup, 620, 600, Color.WHITE);
         final MenuBar menuBar = buildMenuBarWithMenus(stage.widthProperty());
         final MenuBar menuBarSearch = buildMenuBarWithMenus(stage.widthProperty());
-
+        
         buildGrid();
         buildSearchGrid();
-
+        
         rootGroup.getChildren().add(grid);
         searchGroup.getChildren().add(searchGrid);
-
+        
         searchGroup.getChildren().add(menuBarSearch);
         rootGroup.getChildren().add(menuBar);
-
+        
         //grid.setGridLinesVisible(true);
         currentStage = stage;
         currentStage.setScene(mainScene);
@@ -107,7 +107,7 @@ public class GUI extends Application {
         
         System.out.println("Loaded file set to: " + loadedFile);
     }
-
+    
     /***************************************************************************
      * build the scene containing the gui objects for searching the journal.
      **************************************************************************/
@@ -127,7 +127,7 @@ public class GUI extends Application {
         final TextField tf = new TextField();
         
         final ObservableList<String> results = FXCollections.observableArrayList();
-
+        
         ObservableList<String> options
                 = FXCollections.observableArrayList(
                         "Scripture",
@@ -135,11 +135,11 @@ public class GUI extends Application {
                         "Other"
                 );
         final ComboBox comboBox = new ComboBox(options);
+        comboBox.setValue("Scripture");
         
-
-        Button doneButton = new Button("Done");
-
-        doneButton.setOnAction(new EventHandler<ActionEvent>() {
+        Button backButton = new Button("Back");
+        
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 currentStage.setScene(mainScene);
@@ -151,50 +151,50 @@ public class GUI extends Application {
         });
         
         searchButton.setOnAction(new EventHandler<ActionEvent>() {
-           @Override
-           public void handle(ActionEvent e) {
-               comboSelection = (String) comboBox.getSelectionModel().getSelectedItem();
-               results.clear();
-               
-               if (!comboSelection.equals("NO SELECTION")) {
-                   Map<String, Entry> entries = myJournal.getEntries();
-                   
-                   if (comboSelection.equals("Scripture")) {
-                       for (String key : entries.keySet()) {
-                           Entry temp = entries.get(key);                                                      
-                           List<Scripture> scriptures = temp.getScriptureList();
-                           List<String> sScriptures = new ArrayList<>();
-                           
-                           for (Scripture tempS : scriptures) {
-                               sScriptures.add(tempS.display());
-                           }
-                           
-                           if (sScriptures.contains(tf.getText())) {
-                               results.add(key);
-                           }
-                       }
-                   }
-                   if (comboSelection.equals("Topic")) {
-                       for (String key : entries.keySet()) {
-                           Entry temp = entries.get(key);
-                           List<String> topics = temp.getTopicList();
-                           
-                           if (topics.contains(tf.getText())) {
-                               results.add(key);
-                           }
-                       }
-                   }
-                   if (comboSelection.equals("Other")) {
-                       for (String key : entries.keySet()) {
-                           if (entries.get(key).getContent().contains(tf.getText())) {
-                               results.add(key);
-                           }
-                       }
-                   }
-               }
-               
-               resultsList.setItems(results);
-           }
+            @Override
+            public void handle(ActionEvent e) {
+                comboSelection = (String) comboBox.getSelectionModel().getSelectedItem();
+                results.clear();
+                
+                if (!comboSelection.equals("NO SELECTION")) {
+                    Map<String, Entry> entries = myJournal.getEntries();
+                    
+                    if (comboSelection.equals("Scripture")) {
+                        for (String key : entries.keySet()) {
+                            Entry temp = entries.get(key);
+                            List<Scripture> scriptures = temp.getScriptureList();
+                            List<String> sScriptures = new ArrayList<>();
+                            
+                            for (Scripture tempS : scriptures) {
+                                sScriptures.add(tempS.display());
+                            }
+                            
+                            if (sScriptures.contains(tf.getText())) {
+                                results.add(key);
+                            }
+                        }
+                    }
+                    if (comboSelection.equals("Topic")) {
+                        for (String key : entries.keySet()) {
+                            Entry temp = entries.get(key);
+                            List<String> topics = temp.getTopicList();
+                            
+                            if (topics.contains(tf.getText())) {
+                                results.add(key);
+                            }
+                        }
+                    }
+                    if (comboSelection.equals("Other")) {
+                        for (String key : entries.keySet()) {
+                            if (entries.get(key).getContent().contains(tf.getText())) {
+                                results.add(key);
+                            }
+                        }
+                    }
+                }
+                
+                resultsList.setItems(results);
+            }
         });
         
         Label label = new Label("Search by: ");
@@ -203,18 +203,18 @@ public class GUI extends Application {
                 + "*Topic: Search by a topic reference\n"
                 + "*Other: Search by a specific keyword\\phrase\n"
                 + "Press \"Done\" when done searching");
-
+        
         searchGrid.add(hints, 1, 6, 3, 5);
         searchGrid.add(label, 1, 3, 1, 1);
         searchGrid.add(resultsList, 7, 1, 2, 7);
         searchGrid.add(searchButton, 1, 1);
         searchGrid.add(tf, 2, 1);
         searchGrid.add(comboBox, 2, 3);
-        searchGrid.add(doneButton, 1, 5);
+        searchGrid.add(backButton, 1, 5);
     }
-
+    
     /***************************************************************************
-     * build the scene containing the gui objects for interacting with the 
+     * build the scene containing the gui objects for interacting with the
      * journal
      **************************************************************************/
     public GridPane buildGrid() {
@@ -223,36 +223,36 @@ public class GUI extends Application {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-
+        
         Label dateLabel = new Label("Entry Date:");
         grid.add(dateLabel, 0, 0);
-
+        
         Label textLabel = new Label("Selected Entry Text:");
         grid.add(textLabel, 1, 0);
-
+        
         Label scripturesLabel = new Label("Scriptures Found:");
         grid.add(scripturesLabel, 1, 5);
-
+        
         Label topicsLabel = new Label("Topics Found:");
         grid.add(topicsLabel, 6, 5);
-
+        
         final Button newEntryBtn = new Button("New Entry");
         Button updateEntryBtn = new Button("Update Entry");
         Button removeEntryBtn = new Button("Remove Entry");
         Button searchBtn = new Button("Search");
-
+        
         HBox hbNewEntry = new HBox(10);
         hbNewEntry.getChildren().add(newEntryBtn);
-
+        
         HBox hbUpdateEntry = new HBox(10);
         hbUpdateEntry.getChildren().add(updateEntryBtn);
-
+        
         HBox hbRemoveEntry = new HBox(10);
         hbRemoveEntry.getChildren().add(removeEntryBtn);
-
+        
         HBox hbSearch = new HBox(10);
         hbSearch.getChildren().add(searchBtn);
-
+        
         newEntryBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -263,50 +263,50 @@ public class GUI extends Application {
                 }
             }
         });
-
+        
         updateEntryBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 Entry currentEntry = new Entry(selectedDate, entryText.getText());
                 myJournal.addToEntries(selectedDate, currentEntry);
-
+                
                 buildEntriesList();
                 buildScripturesList();
                 buildTopicsList();
             }
         });
-
+        
         removeEntryBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 myJournal.getEntries().remove(selectedDate);
-
+                
                 buildEntriesList();
                 buildScripturesList();
                 buildTopicsList();
             }
         });
-
+        
         searchBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 currentStage.setScene(searchScene);
             }
         });
-
+        
         grid.add(hbNewEntry, 0, 6);
         grid.add(hbUpdateEntry, 0, 7);
         grid.add(hbRemoveEntry, 0, 8);
         grid.add(hbSearch, 0, 9);
-
+        
         buildEntryTextArea();
         buildTopicsList();
         buildScripturesList();
         buildEntriesList();
-
+        
         return grid;
     }
-
+    
     /***************************************************************************
      * Build the ListView object containing the entries within the journal.
      **************************************************************************/
@@ -314,20 +314,20 @@ public class GUI extends Application {
         final Map<String, Entry> myEntries = myJournal.getEntries();
         List<String> dates = new ArrayList<>();
         Collections.sort(dates);
-
+        
         for (String date : myEntries.keySet()) {
             dates.add(date);
         }
-
+        
         //entries = new ListView();
         ObservableList<String> entriesItems = FXCollections.observableArrayList();
-
+        
         for (String date : dates) {
             entriesItems.add(date);
         }
-
+        
         entries.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
+            
             @Override
             public void handle(MouseEvent arg0) {
                 selectedDate = entries.getSelectionModel().getSelectedItem();
@@ -342,18 +342,18 @@ public class GUI extends Application {
                 buildScripturesList();
             }
         });
-
+        
         FXCollections.sort(entriesItems);
         
         entries.setItems(entriesItems);
         entries.setPrefWidth(165);
         entries.setPrefHeight(243);
-
+        
         if (!grid.getChildren().contains(entries)) {
             grid.add(entries, 0, 1, 1, 4);
         }
     }
-
+    
     /***************************************************************************
      * Build the ListView object containing the topic references to the selected
      * journal entry
@@ -368,26 +368,26 @@ public class GUI extends Application {
         } else {
             List<String> topicsList = currentEntry.getTopicList();
             Collections.sort(topicsList);
-
+            
             //topics = new ListView();
             ObservableList<String> topicsItems = FXCollections.observableArrayList();
-
+            
             for (String topic : topicsList) {
                 topicsItems.add(topic);
             }
-
+            
             FXCollections.sort(topicsItems);
-
+            
             topics.setItems(topicsItems);
             topics.setPrefWidth(165);
             topics.setPrefHeight(243);
-
+            
             if (!grid.getChildren().contains((topics))) {
                 grid.add(topics, 6, 6, 1, 4);
             }
         }
     }
-
+    
     /***************************************************************************
      * build the ListView object containing the scripture references to the
      * selected journal entry
@@ -396,7 +396,7 @@ public class GUI extends Application {
         if (selectedDate == null) {
             scriptures = new ListView();
             ObservableList<String> scripturesItems = FXCollections.observableArrayList();
-
+            
             scriptures.setPrefWidth(165);
             scriptures.setPrefHeight(243);
             grid.add(scriptures, 1, 6, 1, 4);
@@ -405,24 +405,24 @@ public class GUI extends Application {
             
             scriptures = new ListView();
             ObservableList<String> scripturesItems = FXCollections.observableArrayList();
-
+            
             for (Scripture scripture : scripturesList) {
                 String temp = scripture.display();
                 scripturesItems.add(temp);
             }
-
+            
             FXCollections.sort(scripturesItems);
-
+            
             scriptures.setItems(scripturesItems);
             scriptures.setPrefWidth(165);
             scriptures.setPrefHeight(243);
-
+            
             if (!grid.getChildren().contains(scriptures)) {
                 grid.add(scriptures, 1, 6, 1, 4);
             }
         }
     }
-
+    
     /***************************************************************************
      * build the TextArea object containing the journal entry content to the
      * selected journal entry
@@ -435,7 +435,7 @@ public class GUI extends Application {
         entryText.setWrapText(true);
         grid.add(entryText, 1, 1, 6, 4);
     }
-
+    
     /***************************************************************************
      * A simple function which changes the application title, loads the file,
      * and displays the results in the console for debugging purposes.
@@ -443,7 +443,7 @@ public class GUI extends Application {
     public void loadFile(String file) {
         try {
             //String file = file;
-            currentStage.setTitle(file + " - Insight Journal Application");            
+            currentStage.setTitle(file + " - Insight Journal Application");
             myJournal.loadFile(file);
             
             buildEntriesList();
@@ -455,18 +455,18 @@ public class GUI extends Application {
             e.printStackTrace();
         }
     }
-
+    
     /***************************************************************************
      * Load a file dialogue to open a file or save to a file.
      **************************************************************************/
     public String getFile(Stage stage, String type) {
         FileChooser fileChooser = new FileChooser();
-
+        
         fileChooser.getExtensionFilters().addAll(
                 new ExtensionFilter("XML Files", "*.xml"),
                 new ExtensionFilter("Text Files", "*.txt"),
                 new ExtensionFilter("All Files", "*.*"));
-
+        
         //Set to user directory or go to default if cannot access
         //String userDirectoryString = System.getProperty("user.home" + "/Desktop");
         String userDirectoryString = System.getProperty("user.home");
@@ -475,19 +475,19 @@ public class GUI extends Application {
         if (!userDirectory.canRead()) {
             userDirectory = new File(userDirectoryString);
         }
-
+        
         fileChooser.setInitialDirectory(userDirectory);
-
+        
         //Choose the file
         File chosenFile = null;
-
+        
         if (type.equals("open")) {
             chosenFile = fileChooser.showOpenDialog(null);
         }
         if (type.equals("save")) {
             chosenFile = fileChooser.showSaveDialog(null);
         }
-
+        
         if (chosenFile != null) {
             String file = chosenFile.getPath();
             currentStage.setTitle(file + " - Insight Journal Application");
@@ -496,47 +496,47 @@ public class GUI extends Application {
             return null;
         }
     }
-
+    
     /***************************************************************************
      * Build the menu bar which is at the top of the application.
      **************************************************************************/
     private MenuBar buildMenuBarWithMenus(final ReadOnlyDoubleProperty menuWidthProperty) {
         final MenuBar menuBar = new MenuBar();
-
-        // Prepare left-most 'File' drop-down menu  
+        
+        // Prepare left-most 'File' drop-down menu
         final Menu fileMenu = new Menu("File");
-
+        
         // BEGIN FILE DROP DOWN ACTORS
         final MenuItem newMenuItem = MenuItemBuilder.create().text("New").onAction(
                 new EventHandler<ActionEvent>() {
-
+                    
                     @Override
                     public void handle(ActionEvent e) {
                         myJournal = new Journal();
                         System.out.println(todayAsString);
-
+                        
                         Entry newEntry = new Entry(todayAsString, "");
                         myJournal.addToEntries(todayAsString, newEntry);
-
+                        
                         buildEntriesList();
                     }
                 }).accelerator(new KeyCodeCombination(
-                                KeyCode.N, KeyCombination.CONTROL_DOWN))
+                        KeyCode.N, KeyCombination.CONTROL_DOWN))
                 .build();
-
+        
         final MenuItem openMenuItem = MenuItemBuilder.create().text("Open").onAction(
                 new EventHandler<ActionEvent>() {
-
+                    
                     @Override
                     public void handle(ActionEvent e) {
                         String file = "";
-
+                        
                         try {
                             Stage newStage = new Stage();
                             file = getFile(newStage, "open");
                             System.out.println(file);
                             loadFile(file);
-
+                            
                             buildEntriesList();
                         } catch (NullPointerException ex) {
                             System.err.println("Unable to open \"" + file + "\"");
@@ -544,28 +544,28 @@ public class GUI extends Application {
                         }
                     }
                 }).accelerator(new KeyCodeCombination(
-                                KeyCode.O, KeyCombination.CONTROL_DOWN))
+                        KeyCode.O, KeyCombination.CONTROL_DOWN))
                 .build();
-
+        
         final MenuItem saveMenuItem = MenuItemBuilder.create().text("Save").onAction(
                 new EventHandler<ActionEvent>() {
-
+                    
                     @Override
                     public void handle(ActionEvent e) {
                         System.out.println("Saving to: " + loadedFile);
                         myJournal.saveFiles(loadedFile);
                     }
                 }).accelerator(new KeyCodeCombination(
-                                KeyCode.S, KeyCombination.CONTROL_DOWN))
+                        KeyCode.S, KeyCombination.CONTROL_DOWN))
                 .build();
-
+        
         final MenuItem saveAsMenuItem = MenuItemBuilder.create().text("Save As").onAction(
                 new EventHandler<ActionEvent>() {
-
+                    
                     @Override
                     public void handle(ActionEvent e) {
                         String file = "";
-
+                        
                         try {
                             Stage newStage = new Stage();
                             file = getFile(newStage, "save");
@@ -577,20 +577,20 @@ public class GUI extends Application {
                         }
                     }
                 }).accelerator(new KeyCodeCombination(
-                                KeyCode.S, KeyCombination.ALT_DOWN, KeyCombination.CONTROL_DOWN))
+                        KeyCode.S, KeyCombination.ALT_DOWN, KeyCombination.CONTROL_DOWN))
                 .build();
-
+        
         final MenuItem exitMenuItem = MenuItemBuilder.create().text("Exit").onAction(
                 new EventHandler<ActionEvent>() {
-
+                    
                     @Override
                     public void handle(ActionEvent e) {
                         currentStage.close();
                     }
                 }).accelerator(new KeyCodeCombination(
-                                KeyCode.F4, KeyCombination.ALT_DOWN))
+                        KeyCode.F4, KeyCombination.ALT_DOWN))
                 .build();
-
+        
         fileMenu.getItems().add(newMenuItem);
         fileMenu.getItems().add(openMenuItem);
         fileMenu.getItems().add(saveMenuItem);
@@ -598,48 +598,48 @@ public class GUI extends Application {
         fileMenu.getItems().add(new SeparatorMenuItem());
         fileMenu.getItems().add(exitMenuItem);
         menuBar.getMenus().add(fileMenu);
-
+        
         // Prepare 'Search' drop-down menu
         final Menu searchMenu = new Menu("Search");
         final MenuItem searchDateMenuItem = MenuItemBuilder.create().text("Search by Date").onAction(
                 new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        System.out.println("NOT IMPLEMENTED YET :(");
+                        currentStage.setScene(searchScene);
                     }
                 }
         ).accelerator(new KeyCodeCombination(
                 KeyCode.D, KeyCombination.ALT_DOWN))
                 .build();
-
+        
         final MenuItem searchScriptureMenuItem = MenuItemBuilder.create().text("Search by Scripture").onAction(
                 new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        System.out.println("NOT IMPLEMENTED YET :(");
+                        currentStage.setScene(searchScene);   
                     }
                 }
         ).accelerator(new KeyCodeCombination(
                 KeyCode.S, KeyCombination.ALT_DOWN))
                 .build();
-
+        
         final MenuItem searchTopicMenuItem = MenuItemBuilder.create().text("Search by Topic").onAction(
                 new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent e) {
-                        System.out.println("NOT IMPLEMENTED YET :(");
+                        currentStage.setScene(searchScene);
                     }
                 }
         ).accelerator(new KeyCodeCombination(
                 KeyCode.T, KeyCombination.ALT_DOWN))
                 .build();
-
+        
         searchMenu.getItems().add(searchDateMenuItem);
         searchMenu.getItems().add(searchScriptureMenuItem);
         searchMenu.getItems().add(searchTopicMenuItem);
         menuBar.getMenus().add(searchMenu);
-
-        // Prepare 'Help' drop-down menu  
+        
+        // Prepare 'Help' drop-down menu
         final Menu helpMenu = new Menu("Help");
         final MenuItem aboutMenuItem = MenuItemBuilder.create().text("About").onAction(
                 new EventHandler<ActionEvent>() {
@@ -654,14 +654,14 @@ public class GUI extends Application {
                 .build();
         helpMenu.getItems().add(aboutMenuItem);
         menuBar.getMenus().add(helpMenu);
-
-        // bind width of menu bar to width of associated stage  
+        
+        // bind width of menu bar to width of associated stage
         menuBar.prefWidthProperty().bind(menuWidthProperty);
-
+        
         return menuBar;
     }
-
-        /***************************************************************************
+    
+    /***************************************************************************
      * main simply calls launch which gets the program going
      **************************************************************************/
     public static void main(String[] args) {
