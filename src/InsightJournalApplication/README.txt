@@ -5,7 +5,7 @@ Authors:
     Tyson Graham   
     Daniel Miller  
     Bryce Lawrence
-    Dallon (I don't know his last name)  :X
+    Dallin Beutler
 
 Classes:
     Journal (Main)
