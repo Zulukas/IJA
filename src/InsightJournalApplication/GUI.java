@@ -446,6 +446,10 @@ public class GUI extends Application {
             currentStage.setTitle(file + " - Insight Journal Application");
             myJournal.loadFile(file);
             
+            // JournalLoader jl = new JournalLoader(file, updater, myJournal);
+            // Thread t = new Thread(jl);
+            // t.start();
+            
             buildEntriesList();
             buildTopicsList();
             buildScripturesList();
